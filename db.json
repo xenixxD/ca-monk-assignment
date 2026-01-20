@@ -1,0 +1,49 @@
+{
+  "blogs": [
+    {
+      "id": "1",
+      "title": "Future of Fintech",
+      "category": [
+        "FINANCE",
+        "TECH"
+      ],
+      "description": "Exploring how AI and blockchain are reshaping financial services",
+      "date": "2026-01-11T09:12:45.120Z",
+      "coverImage": "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg",
+      "content": "The intersection of finance and technology has never been more vibrant.\n\nAs we look towards 2025, the role of the Chartered Accountant is evolving rapidly with AI-powered tools and automation.\n\nBlockchain is transforming audit processes by enabling immutable ledgers and real-time verification.\n\nTo stay relevant, finance professionals must continuously upskill and adapt."
+    },
+    {
+      "id": "2",
+      "title": "Ace Your CA Finals",
+      "category": [
+        "CAREER"
+      ],
+      "description": "Strategies to clear CA exams in first attempt",
+      "date": "2026-01-10T10:30:00.000Z",
+      "coverImage": "https://images.pexels.com/photos/4144222/pexels-photo-4144222.jpeg",
+      "content": "Clearing CA Finals requires discipline, planning, and smart study techniques.\n\nFocus on conceptual clarity, practice mock tests, and revise consistently."
+    },
+    {
+      "id": "1260",
+      "title": "ldfapf",
+      "description": "af'af",
+      "content": "afpakf[oaf",
+      "category": [
+        "FINANCE"
+      ],
+      "coverImage": "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg",
+      "date": "2026-01-20T17:15:04.302Z"
+    },
+    {
+      "id": "105b",
+      "title": "sdsd",
+      "description": "sds",
+      "content": "sd;sdms;d\\",
+      "category": [
+        "FINANCE"
+      ],
+      "coverImage": "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg",
+      "date": "2026-01-20T17:15:47.246Z"
+    }
+  ]
+}
