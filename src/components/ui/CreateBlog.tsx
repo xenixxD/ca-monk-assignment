@@ -2,6 +2,22 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+type CreateBlogPayload = {
+  title: string;
+  description: string;
+  content: string;
+};
+
 export default function CreateBlog() {
   const queryClient = useQueryClient();
 
@@ -9,60 +25,83 @@ export default function CreateBlog() {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
 
-  const mutation = useMutation({
-    mutationFn: async () => {
-      return axios.post("http://localhost:3001/blogs", {
-        title,
-        description,
-        content,
+  const createBlogMutation = useMutation({
+    mutationFn: async (data: CreateBlogPayload) => {
+      const res = await axios.post("http://localhost:3001/blogs", {
+        ...data,
         category: ["FINANCE"],
         coverImage:
           "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg",
         date: new Date().toISOString(),
       });
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blogs"] });
+
+      // reset form
       setTitle("");
       setDescription("");
       setContent("");
-      alert("Blog created successfully ✅");
     },
   });
 
+  const handleSubmit = () => {
+    if (!title || !description || !content) return;
+
+    createBlogMutation.mutate({
+      title,
+      description,
+      content,
+    });
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow mt-10">
-      <h3 className="text-xl font-bold mb-4">Create New Blog</h3>
+    <Card className="max-w-2xl mx-auto mt-10">
+      <CardHeader>
+        <CardTitle>Create New Blog</CardTitle>
+      </CardHeader>
 
-      <input
-        className="w-full border p-2 rounded mb-3"
-        placeholder="Blog title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <CardContent className="space-y-4">
+        <Input
+          placeholder="Blog title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-      <input
-        className="w-full border p-2 rounded mb-3"
-        placeholder="Short description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
+        <Input
+          placeholder="Short description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-      <textarea
-        className="w-full border p-2 rounded mb-3"
-        rows={4}
-        placeholder="Blog content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
+        <Textarea
+          placeholder="Write full blog content..."
+          rows={6}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
 
-      <button
-        onClick={() => mutation.mutate()}
-        className="bg-indigo-600 text-white px-4 py-2 rounded"
-        disabled={mutation.isPending}
-      >
-        {mutation.isPending ? "Creating..." : "Create Blog"}
-      </button>
-    </div>
+        <Button
+          className="w-full"
+          onClick={handleSubmit}
+          disabled={createBlogMutation.isPending}
+        >
+          {createBlogMutation.isPending ? "Publishing..." : "Publish Blog"}
+        </Button>
+
+        {createBlogMutation.isError && (
+          <p className="text-sm text-red-500">
+            Failed to create blog. Please try again.
+          </p>
+        )}
+
+        {createBlogMutation.isSuccess && (
+          <p className="text-sm text-green-600">
+            Blog created successfully!
+          </p>
+        )}
+      </CardContent>
+    </Card>
   );
 }
